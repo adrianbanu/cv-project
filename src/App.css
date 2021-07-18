@@ -1,38 +1,248 @@
-.App {
+html {
+  font-size: 10px;
+}
+
+body{
+  background-color: grey;
+  background-image: url("assets/images.jpg")
+}
+
+main, body, header, footer, div, h1, h3, button{
+	margin: 0;
+  padding: 0;
+}
+
+header{
   text-align: center;
+  padding: 2rem;
+  background-color: rgba(40, 40, 40, 0.9);
+  margin-bottom: 4rem;
+  color: white;
+  font-size: 2.5rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+/*  Edit screen  */
+
+.edit-section-header{
+  font-size: 2.4rem;
+  padding: 1rem 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+main{
+  background-color: rgb(238, 238, 238);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+  margin-bottom: 4rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.edit-section{
+  margin-bottom: 3rem;
+}
+
+.edit-section-container{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
-.App-link {
-  color: #61dafb;
+textarea{
+  width: auto;
+  height: 100px;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+button{
+  cursor: pointer;
+}
+
+input{
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  padding: 1rem;
+}
+
+input[type=date]{
+  padding: 0.77rem;
+}
+
+.buttons{
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  border: 1px solid transparent;
+}
+
+.edit-buttons{
+  background-color: rgba(40, 40, 40, 0.9);
+  color: rgb(238, 238, 238);
+}
+
+.edit-buttons:hover{
+  background-color: rgb(30, 30, 30);
+}
+
+.preview-button{
+  background-color: rgb(61, 133, 198);
+  color: rgb(238, 238, 238);					 
+}
+
+.preview-button:hover{
+  background-color: rgb(46, 117, 179);
+}
+
+.generatePDF-button{
+  background-color: rgb(27, 161, 72);
+  color: rgb(238, 238, 238);
+}
+
+.generatePDF-button:hover{
+  background-color: rgb(26, 141, 64);
+}
+
+.bottom-buttons{
+  margin: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+/* Preview screen */
+
+.preview-personal-container{
+  font-family: 'Courier New', Courier, monospace;
+  padding: 5rem;
+}
+
+.preview-section-header{
+  color: #3D85C6;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact{
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #666666;
+}
+
+.contact-detail{
+  font-size: 1.3rem;
+  color: #999999; 
+}
+
+.grey-line{
+  height: 0.05rem;
+  background-color: #999999;
+}
+
+.contact-telephone, .contact-email{
+  margin-bottom: 0.5rem;
+}
+
+.preview-section{
+  font-family: 'Courier New', Courier, monospace;
+  margin-bottom: 4rem;
+}
+
+.preview-education-header, .preview-work-header{
+  color: #3D85C6;
+  font-size: 1.8rem;
+  padding-left: 5rem;
+  padding-bottom: 2rem;
+}
+
+.preview-education-container, .preview-work-container{
+  padding-left: 5rem;
+  margin-bottom: 2rem;
+}
+
+.no-display{
+  display: none;
+}
+
+.title{
+  font-weight: bold;
+  color: #444444;
+  font-size: 1.5rem;
+}
+
+.name-organization, .start-end{
+  color: #444444;
+  font-size: 1.5rem;
+  padding-top: 0.5rem; 
+}
+
+.make-bold{
+  font-weight: bold;
+}
+
+.main-responsabilities{
+  color: #444444;
+  font-size: 1.5rem;
+  padding-top: 0.5rem; 
+  padding-right: 1.1rem;
+}
+
+.main-responsabilities li{
+  padding-bottom: 0.5rem;
+}
+
+
+/*  Smaller screens  */
+
+@media only screen and (max-width: 700px) {
+  .preview-personal-container{
+    padding-left: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  .preview-section{
+    margin-bottom: 3rem;
+  }
+
+  .preview-education-container, .preview-work-container{
+    padding-left: 3rem;
+  }
+
+  .preview-education-header, .preview-work-header{
+    padding-left: 3rem;
+    font-size: 1.65rem;
+  }
+
+  .title, .name-organization, .start-end, .main-responsabilities{
+    font-size: 1.3rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .preview-personal-container{
+    padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 3rem;
+  }
+
+  .preview-section{
+    margin-bottom: 2.5rem;
+  }
+
+  .preview-education-container, .preview-work-container{
+    padding-left: 1rem;
+  }
+
+  .preview-education-header, .preview-work-header{
+    padding-left: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .title, .name-organization, .start-end, .main-responsabilities{
+    font-size: 1.1rem;
   }
 }
