@@ -34,7 +34,7 @@ class App extends Component {
 
   setStateValue = (valoriExp, compName) => {
     this.setState({
-      [compName] : valoriExp // Daca nu folosesc paranteze patrate nu merge. Pare ca nu recunoaste argumentul... De ce??? Vezi "computed property names"
+      [compName] : valoriExp 
     })
   }
 
