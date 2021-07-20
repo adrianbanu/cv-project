@@ -2,7 +2,6 @@ import jsPDF from 'jspdf';
 import {format} from 'date-fns';
 
 const rowHeight = 10;
-//const rowHeightDouble = 20;
 const smallHeight = 5;
 const verySmallHeight = 2;
 const colorAccent = "#3D85C6";
@@ -18,16 +17,6 @@ const createPDF = () =>{
     let yPosition = 20;
     let pageHeight = 280
 
-    // am incercat sa scriu functia fara const in fata. Imi dadea eroarea ca este updateHeight este undefined. De ce?
-    // in componenta mergea foarte bine. Cred ca acolo mergea pentru ca erau considerate metode.
-    // aici nu sunt intr-o clasa deci trebuie sa o declari ca functie. Daca folosesc function e ok:
-    /*
-        function updateHeight(row){
-            yPosition = yPosition + row;
-        }
-    */
-   // Dar totusi ar trebui sa mearga... Vezi toate exemplele de aici: https://www.w3schools.com/js/js_arrow_function.asp. Cred ca e altceva.
-   // Poate e chestia aia cu declaratul obligatoriu (strict mode). Si aici e implementat ca default..?
     const updateHeight = (row) => {
         yPosition = yPosition + row;
         if(yPosition >= pageHeight){
@@ -37,7 +26,6 @@ const createPDF = () =>{
     }
 
     return {
-        // sa vad daca exista un fel de loop care sa treaca prin toate proprietatile obiectului.
         addPersInfo : (personalInfo) => {
 
             // section name
@@ -70,7 +58,6 @@ const createPDF = () =>{
             updateHeight(rowHeight);
             updateHeight(smallHeight);
         },
-        // as vrea sa folosesc for each, ca sa ma obisnuiesc sa lucrez cu array-uri
         addEducation : (educationInfo) => {
 
             // section education title
@@ -104,7 +91,6 @@ const createPDF = () =>{
             }
             updateHeight(smallHeight);
         },
-        // as vrea sa folosesc for each, ca sa ma obisnuiesc sa lucrez cu array-uri
         addWorkExperience : (workExpInfo) => {
 
             // section work experience title
@@ -147,11 +133,6 @@ const createPDF = () =>{
                       updateHeight(smallHeight);  
                     }
                 }
-                /*
-                jobResponsibilities.forEach(element => {
-                    doc.text(element, xPosition, 20); // daca pun yPosition imi da un warning. Cu for merge fara probleme. De ce?
-                    updateHeight(rowHeight);
-                });*/
                 updateHeight(rowHeight);
             }  
         },
