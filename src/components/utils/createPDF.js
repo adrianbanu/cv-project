@@ -58,7 +58,10 @@ const createPDF = () =>{
             updateHeight(rowHeight);
             updateHeight(smallHeight);
         },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c9bae9c18ca1ff065c83b2c21fe2e55a1e24dd5
         addEducation : (educationInfo) => {
 
             // section education title
@@ -95,7 +98,10 @@ const createPDF = () =>{
             }
             updateHeight(smallHeight);
         },
+<<<<<<< HEAD
         
+=======
+>>>>>>> 5c9bae9c18ca1ff065c83b2c21fe2e55a1e24dd5
         addWorkExperience : (workExpInfo) => {
 
             // section work experience title
@@ -142,7 +148,10 @@ const createPDF = () =>{
                         }
                     }                    
                 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c9bae9c18ca1ff065c83b2c21fe2e55a1e24dd5
                 updateHeight(rowHeight);
             }  
         },
