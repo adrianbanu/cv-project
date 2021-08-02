@@ -23,7 +23,6 @@ const App = () => {
     }
   }
 
-<<<<<<< HEAD
   // populate state variables
   const setStateValue = (componentValues, componentName) => {
     switch(componentName){
@@ -37,12 +36,6 @@ const App = () => {
       case "infoPersonal":
         setInfoPersonal(componentValues);
     }
-=======
-  setStateValue = (valoriExp, compName) => {
-    this.setState({
-      [compName] : valoriExp 
-    })
->>>>>>> 5c9bae9c18ca1ff065c83b2c21fe2e55a1e24dd5
   }
 
   const generatePDF = () => {
