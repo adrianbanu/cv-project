@@ -81,7 +81,7 @@ const createPDF = () =>{
                 doc.setFont(fontType, 'normal');
                 updateHeight(smallHeight);
 
-                // organization education name
+                // organization education name 
                 doc.setFontSize(11);
                 doc.text(xPosition, yPosition, `${educationInfo[i].nameOrganization}`);
                 updateHeight(smallHeight);

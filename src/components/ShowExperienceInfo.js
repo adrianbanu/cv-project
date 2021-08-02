@@ -12,7 +12,7 @@ function ShowExperienceInfo(props) {
     return (
       props.screenView === 0 ?
 
-      // Edit screen
+      // Edit screen 
         <div className="edit-section-container" key={props.elementId}>
           <input
             type="text"

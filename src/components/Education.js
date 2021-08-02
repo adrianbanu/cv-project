@@ -31,7 +31,7 @@ const Education = (props) => {
         let index = changedEducationInfo.findIndex((item) => id === item.id)
         changedEducationInfo[index][event.target.name] = event.target.value;
 
-        props.getStateValues(changedEducationInfo, "infoEducation") // send the array in App
+        props.getStateValues(changedEducationInfo, "infoEducation") // send the array in App 
 
         setEducationInfo(changedEducationInfo);
 	}

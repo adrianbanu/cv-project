@@ -43,11 +43,9 @@ const App = () => {
     createCV.addPersInfo(infoPersonal);
     createCV.addEducation(infoEducation);
     createCV.addWorkExperience(infoExperience);
-    //console.log("prenume: ", infoPersonal[0].firstName);
-    //console.log("nume: ", infoPersonal[0].lastName);
     createCV.savePDF(`${infoPersonal[0].firstName} ${infoPersonal[0].lastName} CV.pdf`);
   }
-   
+  
     return (
       <div>
         <header>

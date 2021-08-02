@@ -26,11 +26,6 @@ const PersonalInfo = ({screenView, getStateValues}) => {
 	}
     
     // This line gives a warning. In this case I think it is fine to ignore it.
-    /*
-    It is only safe to omit a function from the dependency list if nothing in it (or the functions called by it) references props, 
-    state, or values derived from them. [I refer to states from another component so I think that is fine]
-    From here: https://reactjs.org/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies
-    */
     useEffect(() => {
         getStateValues([{firstName, lastName, email, telephone}], "infoPersonal");
       },[firstName, lastName, email, telephone]);
