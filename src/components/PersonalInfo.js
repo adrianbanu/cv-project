@@ -1,59 +1,70 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
-class PersonalInfo extends Component {
+const PersonalInfo = ({screenView, getStateValues}) => {
 
-    constructor(props){
-        super(props)
-        this.state = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            telephone: ""
-            
-        }
-    }
+    const[firstName, setFirstName] = useState("");
+    const[lastName, setLastName] = useState("");
+    const[email, setEmail] = useState("");
+    const[telephone, setTelephone] = useState("");
     
-    changeInfo = (event) =>{
-		this.setState ({
-			[event.target.name]: event.target.value,
-		},
-        () =>{
-            this.props.getStateValues([this.state], "valoriPersonal")
-        })
+    // update state values
+    const changeInfo = (event) =>{
+        switch(event.target.name){
+            default:
+            case "firstName":
+                setFirstName(event.target.value);
+                break;
+            case "lastName":
+                setLastName(event.target.value);
+                break;
+            case "email":
+                setEmail(event.target.value);
+                break;
+            case "telephone":
+                setTelephone(event.target.value);               
+        }
 	}
+    
+    // This line gives a warning. In this case I think it is fine to ignore it.
+    /*
+    It is only safe to omit a function from the dependency list if nothing in it (or the functions called by it) references props, 
+    state, or values derived from them. [I refer to states from another component so I think that is fine]
+    From here: https://reactjs.org/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies
+    */
+    useEffect(() => {
+        getStateValues([{firstName, lastName, email, telephone}], "infoPersonal");
+      },[firstName, lastName, email, telephone]);
+      
 
-    render(){
-        return(  
-            this.props.screenView === 0 ?
+    return(  
+        screenView === 0 ?
 
-                //Edit screen           
-                <div className="edit-section-container"> 
-                    <h3 className="edit-section-header">Personal Information</h3>
-                    <input type="text" name ="firstName" placeholder="First name" value={this.state.firstName} onChange={this.changeInfo}/>
-                    <input type="text" name ="lastName" placeholder="Last name" value={this.state.lastName} onChange={this.changeInfo}></input>
-                    <input type="email" name ="email" placeholder="Email"  value={this.state.email} onChange={this.changeInfo}></input>
-                    <input type="tel" name ="telephone" placeholder="Telephone"  value={this.state.telephone} onChange={this.changeInfo}></input>
-                    
+            //Edit screen           
+            <div className="edit-section-container"> 
+                <h3 className="edit-section-header">Personal Information</h3>
+                <input type="text" name ="firstName" placeholder="First name" value={firstName} onChange={changeInfo}/>
+                <input type="text" name ="lastName" placeholder="Last name" value={lastName} onChange={changeInfo}></input>
+                <input type="email" name ="email" placeholder="Email"  value={email} onChange={changeInfo}></input>
+                <input type="tel" name ="telephone" placeholder="Telephone"  value={telephone} onChange={changeInfo}></input>
+            </div>
+
+        :   //Preview screen
+            <div className="preview-personal-container">
+                <h3 className="preview-section-header">
+                    <label>{firstName}</label>&nbsp;
+                    <label>{lastName}</label>
+                </h3>
+                <div className="contact-telephone">
+                    <label className="contact">Telephone: </label>
+                    <label className="contact-detail">{telephone}</label>                        
                 </div>
-
-            :   //Preview screen
-                <div className="preview-personal-container">
-                    <h3 className="preview-section-header">
-                        <label>{this.state.firstName}</label>&nbsp;
-                        <label>{this.state.lastName}</label>
-                    </h3>
-                    <div className="contact-telephone">
-                        <label className="contact">Telephone: </label>
-                        <label className="contact-detail">{this.state.telephone}</label>                        
-                    </div>
-                    <div className="contact-email">
-                        <label className="contact">Email: </label>
-                        <label className="contact-detail">{this.state.email}</label>                        
-                    </div>
-                    <div className="grey-line"></div>                    
+                <div className="contact-email">
+                    <label className="contact">Email: </label>
+                    <label className="contact-detail">{email}</label>                        
                 </div>
-        );
-    }
+                <div className="grey-line"></div>                    
+            </div>
+    );
 }
 
 export default PersonalInfo;

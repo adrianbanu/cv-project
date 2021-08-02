@@ -70,11 +70,13 @@ function ShowExperienceInfo(props) {
         <div className="start-end">
           <label>{dateValues}</label>
         </div>
-        <ul className="main-responsabilities">
-          {props.mainActivities.split('\n').map((task, i) => {
-            return <li key={i}>{task}</li>;
-          })}
-        </ul>
+        {props.mainActivities ?
+          <ul className="main-responsabilities">
+            {props.mainActivities.split('\n').map((task, i) => {
+              return <li key={i}>{task}</li>;
+            })}
+          </ul>
+        : null}
       </div>
     );
   }

@@ -1,70 +1,70 @@
 import './App.css';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PersonalInfo from './components/PersonalInfo';
 import Education from './components/Education';
 import WorkExperience from './components/WorkExperience';
 import createPDF from './components/utils/createPDF'
 
-class App extends Component {
-  constructor(){
-    super();
-    this.state={
-      buttonValue : 0,
-      buttonLabel : "Preview",
-      valoriPersonal: [],
-      valoriEdu : [],
-      valoriExp : [],
-    }
-    this.changeView= this.changeView.bind(this);
-  }
+const App = () => {
 
-  changeView(){
-    if (this.state.buttonValue === 0){
-      this.setState({
-        buttonValue : 1,
-        buttonLabel : "Go back to editing"
-      })
+  const [buttonValue, setButtonValue] = useState(0);
+  const [buttonLabel, setButtonLabel] = useState("Preview");
+  const [infoPersonal, setInfoPersonal] = useState([]);
+  const [infoEducation, setInfoEducation] = useState([]);
+  const [infoExperience, setInfoExperience] = useState([]);
+
+  const changeView = () => {
+    if (buttonValue === 0){
+      setButtonValue(1);
+      setButtonLabel("Go back to editing");
     }else{
-      this.setState({
-        buttonValue : 0,
-        buttonLabel : "Preview"
-      })
+      setButtonValue(0);
+      setButtonLabel("Preview");
     }
   }
 
-  setStateValue = (valoriExp, compName) => {
-    this.setState({
-      [compName] : valoriExp // Daca nu folosesc paranteze patrate nu merge. Pare ca nu recunoaste argumentul... De ce??? Vezi "computed property names"
-    })
+  // populate state variables
+  const setStateValue = (componentValues, componentName) => {
+    switch(componentName){
+      default:
+      case "infoExperience":
+        setInfoExperience(componentValues);
+        break;
+      case "infoEducation":
+        setInfoEducation(componentValues);
+        break;
+      case "infoPersonal":
+        setInfoPersonal(componentValues);
+    }
   }
 
-  generatePDF = () => {
+  const generatePDF = () => {
     const createCV = createPDF ();
-    createCV.addPersInfo(this.state.valoriPersonal);
-    createCV.addEducation(this.state.valoriEdu);
-    createCV.addWorkExperience(this.state.valoriExp);
-    createCV.savePDF(`${this.state.valoriPersonal[0].firstName} ${this.state.valoriPersonal[0].lastName} CV.pdf`);
+    createCV.addPersInfo(infoPersonal);
+    createCV.addEducation(infoEducation);
+    createCV.addWorkExperience(infoExperience);
+    //console.log("prenume: ", infoPersonal[0].firstName);
+    //console.log("nume: ", infoPersonal[0].lastName);
+    createCV.savePDF(`${infoPersonal[0].firstName} ${infoPersonal[0].lastName} CV.pdf`);
   }
-  
-  render(){
+   
     return (
       <div>
         <header>
           <h1>Create your CV</h1>
         </header>
         <main>
-          <PersonalInfo screenView={this.state.buttonValue} getStateValues = {this.setStateValue}/>
-          <Education screenView={this.state.buttonValue} getStateValues = {this.setStateValue}/>
-          <WorkExperience screenView={this.state.buttonValue} getStateValues = {this.setStateValue}/>
+          <PersonalInfo screenView={buttonValue} getStateValues = {setStateValue}/>
+          <Education screenView={buttonValue} getStateValues = {setStateValue}/>
+          <WorkExperience screenView={buttonValue} getStateValues = {setStateValue}/>
           <div className="bottom-buttons">
-            <button className="preview-button buttons" onClick= {this.changeView}>{this.state.buttonLabel}</button>
-            <button className="generatePDF-button buttons" onClick= {this.generatePDF}>Generate PDF</button>    
+            <button className="preview-button buttons" onClick= {changeView}>{buttonLabel}</button>
+            <button className="generatePDF-button buttons" onClick= {generatePDF}>Generate PDF</button>    
           </div>
         </main>
         <footer></footer>
       </div>
     );
-  }
 }
 
 export default App;

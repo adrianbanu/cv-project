@@ -2,7 +2,6 @@ import jsPDF from 'jspdf';
 import {format} from 'date-fns';
 
 const rowHeight = 10;
-//const rowHeightDouble = 20;
 const smallHeight = 5;
 const verySmallHeight = 2;
 const colorAccent = "#3D85C6";
@@ -18,16 +17,6 @@ const createPDF = () =>{
     let yPosition = 20;
     let pageHeight = 280
 
-    // am incercat sa scriu functia fara const in fata. Imi dadea eroarea ca este updateHeight este undefined. De ce?
-    // in componenta mergea foarte bine. Cred ca acolo mergea pentru ca erau considerate metode.
-    // aici nu sunt intr-o clasa deci trebuie sa o declari ca functie. Daca folosesc function e ok:
-    /*
-        function updateHeight(row){
-            yPosition = yPosition + row;
-        }
-    */
-   // Dar totusi ar trebui sa mearga... Vezi toate exemplele de aici: https://www.w3schools.com/js/js_arrow_function.asp. Cred ca e altceva.
-   // Poate e chestia aia cu declaratul obligatoriu (strict mode). Si aici e implementat ca default..?
     const updateHeight = (row) => {
         yPosition = yPosition + row;
         if(yPosition >= pageHeight){
@@ -37,7 +26,6 @@ const createPDF = () =>{
     }
 
     return {
-        // sa vad daca exista un fel de loop care sa treaca prin toate proprietatile obiectului.
         addPersInfo : (personalInfo) => {
 
             // section name
@@ -70,7 +58,7 @@ const createPDF = () =>{
             updateHeight(rowHeight);
             updateHeight(smallHeight);
         },
-        // as vrea sa folosesc for each, ca sa ma obisnuiesc sa lucrez cu array-uri
+
         addEducation : (educationInfo) => {
 
             // section education title
@@ -99,12 +87,15 @@ const createPDF = () =>{
                 updateHeight(smallHeight);
 
                 // education period
-                doc.text(xPosition, yPosition, `${format(new Date (educationInfo[i].startDate), 'MMMM yyyy')} - ${format(new Date(educationInfo[i].endDate), 'MMMM yyyy')}`);
-                updateHeight(rowHeight);
+                if (educationInfo[i].startDate !== "" && educationInfo[i].endDate !== ""){
+                    doc.text(xPosition, yPosition, `${format(new Date (educationInfo[i].startDate), 'MMMM yyyy')} - ${format(new Date(educationInfo[i].endDate), 'MMMM yyyy')}`);
+                    updateHeight(rowHeight);
+                }
+
             }
             updateHeight(smallHeight);
         },
-        // as vrea sa folosesc for each, ca sa ma obisnuiesc sa lucrez cu array-uri
+        
         addWorkExperience : (workExpInfo) => {
 
             // section work experience title
@@ -131,27 +122,27 @@ const createPDF = () =>{
                 updateHeight(smallHeight); 
 
                 // job period
-                doc.text(xPosition, yPosition, `${format(new Date(workExpInfo[i].startDate), 'MMMM yyyy')} - ${format(new Date(workExpInfo[i].endDate), 'MMMM yyyy')}`);
-                doc.setFont(fontType, 'normal');
-                doc.setFontSize(11);
-                updateHeight(smallHeight); 
+                if (workExpInfo[i].startDate !== "" && workExpInfo[i].endDate !== ""){
+                    doc.text(xPosition, yPosition, `${format(new Date(workExpInfo[i].startDate), 'MMMM yyyy')} - ${format(new Date(workExpInfo[i].endDate), 'MMMM yyyy')}`);
+                    doc.setFont(fontType, 'normal');
+                    doc.setFontSize(11);
+                    updateHeight(smallHeight); 
+                }
 
                 // job responsibilities
                 let jobResponsibilities = workExpInfo[i].mainActivities.split('\n');
-                for (let i = 0; i < jobResponsibilities.length; i++){
-                    let numberOfRows = Math.floor(jobResponsibilities[i].length/74);
-                    doc.text(`- ${jobResponsibilities[i]}`, xPosition + 10, yPosition, {maxWidth: 170}); 
-                    if(numberOfRows > 0){
-                        updateHeight(smallHeight * (numberOfRows + 1));
-                    }else{
-                      updateHeight(smallHeight);  
-                    }
+                if (jobResponsibilities){
+                    for (let i = 0; i < jobResponsibilities.length; i++){
+                        let numberOfRows = Math.floor(jobResponsibilities[i].length/74);
+                        doc.text(`- ${jobResponsibilities[i]}`, xPosition + 10, yPosition, {maxWidth: 170}); 
+                        if(numberOfRows > 0){
+                            updateHeight(smallHeight * (numberOfRows + 1));
+                        }else{
+                        updateHeight(smallHeight);  
+                        }
+                    }                    
                 }
-                /*
-                jobResponsibilities.forEach(element => {
-                    doc.text(element, xPosition, 20); // daca pun yPosition imi da un warning. Cu for merge fara probleme. De ce?
-                    updateHeight(rowHeight);
-                });*/
+
                 updateHeight(rowHeight);
             }  
         },

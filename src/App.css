@@ -197,7 +197,23 @@ input[type=date]{
 
 /*  Smaller screens  */
 
+@media only screen and (max-width: 850px) {
+  
+  header{
+    margin-bottom: 0;
+  }
+
+  main{
+    margin-bottom: 0;
+  }
+}
+
 @media only screen and (max-width: 700px) {
+
+  header{
+    font-size: 2rem;
+  }
+
   .preview-personal-container{
     padding-left: 3rem;
     padding-top: 3rem;
@@ -223,6 +239,11 @@ input[type=date]{
 }
 
 @media only screen and (max-width: 600px) {
+
+  header{
+    font-size: 1.75rem;
+  }
+
   .preview-personal-container{
     padding-left: 1rem;
     padding-top: 1rem;

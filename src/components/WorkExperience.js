@@ -1,82 +1,67 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import ShowExperienceInfo from "./ShowExperienceInfo";
 
-class WorkExperience extends Component{
+const WorkExperience = (props) => {
 
-    constructor(props){
-        super(props)
-        this.state={
-            WorkExp: {
-                titleOcupation : "",
-                nameOrganization: "",
-                startDate : "",
-                endDate : "",
-                mainActivities: "",
-                id : 0
-            },
-            experienceInfo : [],
-            type: "text"
-        }
+    const[titleOcupation, setTitleOcupation] = useState("");
+    const[nameOrganization, setNameOrganization] = useState("");
+    const[startDate, setStartDate] = useState("");
+    const[endDate, setEndDate] = useState("");
+    const[mainActivities, setMainActivities] = useState("");
+    const[id, setId]= useState(0);
+
+    const[experienceInfo, setExperienceInfo] = useState([]);
+    const[type, setType] = useState("text");
+
+    const onFocus = () => {
+        setType('date');
     }
 
-    onFocus = () => {
-        this.setState({
-          type: 'date'
-        });
+    const onBlur = () =>{
+        setType('text');
     }
 
-    onBlur = () =>{
-        this.setState({
-            type: 'text'
-        })
+    const deleteExperience = (id) =>{
+        const nextExperienceInfo = experienceInfo.filter((item) => id !== item.id);
+        props.getStateValues(nextExperienceInfo, "infoExperience"); 
+        setExperienceInfo(nextExperienceInfo);
     }
 
-    deleteExperience = (id) =>{
-        this.setState(state => {
-            const experienceInfo = state.experienceInfo.filter((item) => id !== item.id);
+    const changeInfo = (id, event) =>{
+        let changedExperienceInfo = [...experienceInfo];
+        let index = changedExperienceInfo.findIndex((item) => id === item.id)
+        changedExperienceInfo[index][event.target.name] = event.target.value;
 
-            this.props.getStateValues(experienceInfo, "valoriExp"); 
-       
-            return {
-                experienceInfo,
-            };
-          });
-    }
+        props.getStateValues(changedExperienceInfo, "infoExperience"); 
 
-    changeInfo = (id, event) =>{
-        let experienceInfo = [...this.state.experienceInfo];
-        let index = experienceInfo.findIndex((item) => id === item.id)
-        experienceInfo[index].[event.target.name] = event.target.value;
-
-        this.props.getStateValues(experienceInfo, "valoriExp"); 
-
-        this.setState({
-                experienceInfo
-            }
-        )
+        setExperienceInfo(changedExperienceInfo);
 	}
 
-    addToExperience = () =>{
-        this.setState({
-            experienceInfo : [...this.state.experienceInfo, this.state.WorkExp],
-            WorkExp :{titleOcupation : "", nameOrganization : "", startDate : "", endDate : "", mainActivities: "", id : this.state.WorkExp.id + 1}
-        })
+    const addToExperience = () => {
+        setTitleOcupation("");
+        setNameOrganization("");
+        setStartDate("");
+        setEndDate("");
+        setMainActivities("");
+        setId(id + 1);
+
+        setExperienceInfo([...experienceInfo, {titleOcupation, nameOrganization, startDate, endDate, mainActivities, id}]);
     }
 
-    loopExperienceInfo = () =>{
-        this.state.experienceInfo.length === 0 && this.addToExperience()
+    const loopExperienceInfo = () =>{
+        experienceInfo.length === 0 && addToExperience()
         let experienceSection = []
-        for(let i = 0; i < this.state.experienceInfo.length; i++){
-            experienceSection.push(<ShowExperienceInfo valueTitle = {this.state.experienceInfo[i].titleOcupation} 
-                valueOrganization={this.state.experienceInfo[i].nameOrganization}
-                valueStartDate = {this.state.experienceInfo[i].startDate} 
-                valueEndDate = {this.state.experienceInfo[i].endDate}
-                mainActivities = {this.state.experienceInfo[i].mainActivities}
-                elementId = {this.state.experienceInfo[i].id}
-                key = {this.state.experienceInfo[i].id}
-                deleteExperience = {this.deleteExperience}
-                screenView = {this.props.screenView}
-                showInput = {this.changeInfo} blur = {this.onBlur} focus = {this.onFocus} inputType ={this.state.type}/>)
+        for(let i = 0; i < experienceInfo.length; i++){
+            experienceSection.push(<ShowExperienceInfo valueTitle = {experienceInfo[i].titleOcupation} 
+                valueOrganization={experienceInfo[i].nameOrganization}
+                valueStartDate = {experienceInfo[i].startDate} 
+                valueEndDate = {experienceInfo[i].endDate}
+                mainActivities = {experienceInfo[i].mainActivities}
+                elementId = {experienceInfo[i].id}
+                key = {experienceInfo[i].id}
+                deleteExperience = {deleteExperience}
+                screenView = {props.screenView}
+                showInput = {changeInfo} blur = {onBlur} focus = {onFocus} inputType ={type}/>)
         }
 
         return <div className="experience-section">
@@ -84,18 +69,16 @@ class WorkExperience extends Component{
         </div>
     }
 
-    render(){
-        let classNameSection = this.props.screenView === 0 ? "edit-section" : "preview-section";
-        let classNameSectionHeader = this.props.screenView === 0 ? "edit-section-header" : "preview-work-header";
-        let classNameButtons = this.props.screenView === 0 ? "edit-buttons buttons" : "no-display";
-        return(
-            <div className={classNameSection}>
-                <h3 className={classNameSectionHeader}>Work experience</h3>
-                {this.loopExperienceInfo()}
-                <button className={classNameButtons} onClick={this.addToExperience}>Add experience </button>
-            </div>
-        );
-    }
+    let classNameSection = props.screenView === 0 ? "edit-section" : "preview-section";
+    let classNameSectionHeader = props.screenView === 0 ? "edit-section-header" : "preview-work-header";
+    let classNameButtons = props.screenView === 0 ? "edit-buttons buttons" : "no-display";
+    return(
+        <div className={classNameSection}>
+            <h3 className={classNameSectionHeader}>Work experience</h3>
+            {loopExperienceInfo()}
+            <button className={classNameButtons} onClick={addToExperience}>Add experience </button>
+        </div>
+    );
 }
 
 export default WorkExperience;
